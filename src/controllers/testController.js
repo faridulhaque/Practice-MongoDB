@@ -37,6 +37,20 @@ const testSomething = async (req, res, next) => {
         const find_le = await collection.find({age: {$le: 10}}).toArray()
 
 
+        const find_in = await collection.find({gender:"male", age: {$gt: 20, $lt: 10}}, {age: 1})
+
+        const find_and = await collection.find({$and: [
+            {$gender: {$eq: "male"}},
+            {$domain: {$eq: "it"}},
+            {$available: {$eq: false}},
+        ]})
+        const find_or = await collection.find({$or: [
+            {$gender: {$eq: "male"}},
+            {$domain: {$eq: "it"}},
+            {$available: {$eq: false}},
+        ]})
+
+
         const result = find_equal
         
 
