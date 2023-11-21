@@ -32,6 +32,68 @@ const aggregation = async (req, res, next) => {
             }
         ]);
 
+        const gData_unwind = db.aggregate([
+
+            {
+
+                $unwind: "$friends",
+                $group: {
+                    _id: "$friends",
+
+                }
+            }
+        ])
+
+
+        const gData_bucket = db.aggregate([
+            {
+                $bucket: {
+                    groupBy: "$age",
+                    boundaries: ["20", "40"],
+                    default: "over 40",
+                    output: {
+                        count: { $sum: 1 },
+                    }
+                },
+                $sort: {
+                    count: -1
+                }
+            }
+        ])
+
+
+        // facet is used to get multiple pipeline
+
+        const gData_facet = db.aggregate([
+            {
+                $facet: {
+                    "friendsCount": [
+
+                        {
+
+                            $unwind: "$friends",
+                            $group: {
+                                _id: "$friends",
+                                count: {$sum: 1}
+
+                            }
+                        }
+                    ]
+                }
+            }
+        ])
+
+        const data_look_up = db.aggregate([
+            {
+                $lookup: {
+                    from: "test",
+                    localField: "userId",
+                    foreignField: "_id",
+                    as: "myDataName"
+                }
+            }
+        ])
+
 
     } catch (error) {
 
