@@ -75,22 +75,35 @@ const testSomething = async (req, res, next) => {
         })
 
 
-        const update_one = await collection.find({
+        const update_one = await collection.updateOne({
             _id: ObjectId("09090909090909090909")
         }, { $set: { age: 10 } })
 
-        const update_array = await collection.find({
+        const update_array = await collection.updateOne({
             _id: ObjectId("09090909090909090909")
         }, { $addToSet: { interests: "writing" } })
 
 
-        const update_array_multiple_each = await collection.find({
+        const update_array_multiple_each = await collection.updateOne({
             _id: ObjectId("09090909090909090909")
         }, { $addToSet: { interests: {$each: ["cooking, writing"]} } })
 
-        const update_array_multiple_push = await collection.find({
+        const update_array_multiple_push = await collection.updateOne({
             _id: ObjectId("09090909090909090909")
         }, { $addToSet: { interests: {$push: ["cooking, writing"]} } })
+
+
+        // unset, pull, pullAll
+
+        const unset_one = await collection.updateOne({
+            _id: ObjectId("09090909090909090909")
+        }, { $unset: { age: 1 } })
+
+
+        const pull_one = await collection.updateOne({
+            _id: ObjectId("09090909090909090909")
+        }, { $pull: { interests: "cooking" } })
+
 
 
         res.status(200).json(result);
