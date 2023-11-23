@@ -3,11 +3,10 @@ require("dotenv").config();
 
 
 
-const client = new MongoClient("mongodb+srv://faridulhaquemurshed:sXY9hXP4Za1sH4jk@cluster0.nffl8uk.mongodb.net/?retryWrites=true&w=majority", {
+const client = new MongoClient("mongodb+srv://faridulhaquemurshed:IYetP5IQNi7E9Az4@cluster0.zpsp4pp.mongodb.net/?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
-
 
 
 let dbConnection;
@@ -19,7 +18,7 @@ module.exports = {
                 return callback(err);
             }
 
-            dbConnection = db.db("web-yapar")
+            dbConnection = db.db("manav")
             console.log("Successfully connected to MongoDB.");
 
             return callback();
